@@ -3,6 +3,10 @@ PRODUCT_NAME := beergang
 PRODUCT_BRAND := beergang
 PRODUCT_DEVICE := generic
 
+# Inherit kitkat audio package.
+$(call inherit-product, vendor/psx/products/kitkataudio.mk)
+
+# Common overrides
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
