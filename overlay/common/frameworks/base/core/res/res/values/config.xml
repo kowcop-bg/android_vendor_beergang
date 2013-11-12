@@ -7,6 +7,6 @@
         <!-- The Google provider -->
         <item>com.google.android.gms</item>
     </string-array>
-
+    
 </resources>
 
