@@ -13,6 +13,9 @@ PRODUCT_MANUFACTURER := LGE
 
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=occam BUILD_FINGERPRINT="fingerprint: google/hammerhead/hammerhead:4.4/KRT16M/893803:user/release-keys" PRIVATE_BUILD_DESC="hammerhead-user 4.4 KRT16M 893803 release-keys"
 
+PRODUCT_COPY_FILES += \
+    vendor/beergang/prebuilt/common/bootanimation/1080.zip:system/media/bootanimation.zip
+
 # Build SimToolKit
 PRODUCT_PACKAGES += \
     Stk
