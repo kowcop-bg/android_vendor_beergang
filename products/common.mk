@@ -20,6 +20,10 @@ PRODUCT_PACKAGES += \
 # Common overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/beergang/overlay/common
 
+# World APN list
+PRODUCT_COPY_FILES += \
+    vendor/beergang/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
+
 # Latin IME lib
 PRODUCT_COPY_FILES += \
     vendor/beergang/proprietary/common/system/lib/libjni_latinime.so:system/lib/libjni_latinime.so
