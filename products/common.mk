@@ -23,6 +23,10 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/beergang/overlay/common
 # World APN list
 PRODUCT_COPY_FILES += \
     vendor/beergang/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
+    
+# World SPN overrides list
+PRODUCT_COPY_FILES += \
+    vendor/beergang/prebuilt/common/etc/spn-conf.xml:system/etc/spn-conf.xml
 
 # Latin IME lib
 PRODUCT_COPY_FILES += \
@@ -70,7 +74,7 @@ endif
 # Versioning System
  PRODUCT_VERSION_MAJOR = alpha
  PRODUCT_VERSION_MINOR = 0
- PRODUCT_VERSION_MAINTENANCE = 1
+ PRODUCT_VERSION_MAINTENANCE = 3
 
  # Set all versions
  BEERGANG_VERSION := BeerGang-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)
