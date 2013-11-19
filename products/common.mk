@@ -77,11 +77,8 @@ endif
  PRODUCT_VERSION_MAINTENANCE = 4
  BEERGANG_POSTFIX := -$(shell date +"%Y%m%d-%H%M")
 
- # Set all versions
- BEERGANG_VERSION := beergang-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE).$(BEERGANG_POSTFIX)
- BEERGANG_MOD_VERSION := beergang-$(BEERGANG_BUILD)-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE).$(BEERGANG_POSTFIX)
-    
-PRODUCT_PROPERTY_OVERRIDES += \
-    BUILD_DISPLAY_ID=$(BUILD_ID) \
-    ro.beergang.version=$(BEERGANG_VERSION) \
-    ro.modversion=$(BEERGANG_MOD_VERSION)    
+
+# Motox dalvik patch
+    ifneq ($(filter beergang_mako,$(TARGET_PRODUCT)),)
+    $(call inherit-product, vendor/beergang/products/motoxdalvikpatch.mk)
+endif
