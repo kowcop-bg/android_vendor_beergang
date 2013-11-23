@@ -4,7 +4,7 @@ PRODUCT_BRAND := beergang
 PRODUCT_DEVICE := generic
 
 # Inherit kitkat audio package.
-$(call inherit-product, vendor/psx/products/kitkataudio.mk)
+$(call inherit-product, vendor/beergang/products/kitkataudio.mk)
 
 # Common overrides
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -27,10 +27,6 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/beergang/overlay/common
 # World APN list
 PRODUCT_COPY_FILES += \
     vendor/beergang/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
-    
-# World SPN overrides list
-PRODUCT_COPY_FILES += \
-    vendor/beergang/prebuilt/common/etc/spn-conf.xml:system/etc/spn-conf.xml
 
 # Latin IME lib
 PRODUCT_COPY_FILES += \
@@ -43,46 +39,22 @@ PRODUCT_COPY_FILES += \
 # T-Mobile theme engine
 #include vendor/beergang/products/themes_common.mk
 
-# Boot animation include
-ifneq ($(TARGET_SCREEN_WIDTH) $(TARGET_SCREEN_HEIGHT),$(space))
-
-# determine the smaller dimension
-TARGET_BOOTANIMATION_SIZE := $(shell \
-  if [ $(TARGET_SCREEN_WIDTH) -lt $(TARGET_SCREEN_HEIGHT) ]; then \
-    echo $(TARGET_SCREEN_WIDTH); \
-  else \
-    echo $(TARGET_SCREEN_HEIGHT); \
-  fi )
-
-# get a sorted list of the sizes
-bootanimation_sizes := $(subst .zip,, $(shell ls vendor/beergang/prebuilt/common/bootanimation))
-bootanimation_sizes := $(shell echo -e $(subst $(space),'\n',$(bootanimation_sizes)) | sort -rn)
-
-# find the appropriate size and set
-define check_and_set_bootanimation
-$(eval TARGET_BOOTANIMATION_NAME := $(shell \
-  if [ -z "$(TARGET_BOOTANIMATION_NAME)" ]; then
-    if [ $(1) -le $(TARGET_BOOTANIMATION_SIZE) ]; then \
-      echo $(1); \
-      exit 0; \
-    fi;
-  fi;
-  echo $(TARGET_BOOTANIMATION_NAME); ))
-endef
-$(foreach size,$(bootanimation_sizes), $(call check_and_set_bootanimation,$(size)))
-
-PRODUCT_COPY_FILES += \
-    vendor/beergang/prebuilt/common/bootanimation/$(TARGET_BOOTANIMATION_NAME).zip:system/media/bootanimation.zip
-endif
     
 # Versioning System
  PRODUCT_VERSION_MAJOR = alpha
- PRODUCT_VERSION_MINOR = 0
- PRODUCT_VERSION_MAINTENANCE = 4
- BEERGANG_POSTFIX := -$(shell date +"%Y%m%d-%H%M")
+ PRODUCT_VERSION_MINOR = 0.4
+ BEERGANG_POSTFIX := $(shell date +"%Y%m%d-%H%M")
 
+ # Set all versions
+ BEERGANG_VERSION := $(TARGET_PRODUCT)-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(BEERGANG_POSTFIX)
+ BEERGANG_MOD_VERSION := $(TARGET_PRODUCT)-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(BEERGANG_POSTFIX)
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    BUILD_DISPLAY_ID=$(BUILD_ID) \
+    ro.beergang.version=$(BEERGANG_VERSION) \
+    ro.modversion=$(BEERGANG_MOD_VERSION)
 
 # Motox dalvik patch
-    ifneq ($(filter beergang_mako,$(TARGET_PRODUCT)),)
+    ifneq ($(filter beergang_hammerhead beergang_mako,$(TARGET_PRODUCT)),)
     $(call inherit-product, vendor/beergang/products/motoxdalvikpatch.mk)
 endif
